@@ -5,6 +5,7 @@ use rand::seq::SliceRandom; // For selecting random elements from a list //
 
 // Define the Citizen struct with public fields //
 // Will have variations for each government type //
+
 pub struct Citizen {
     pub name: String,
     pub age: u32,
@@ -34,25 +35,44 @@ pub struct Citizen {
     pub philosophy: u8,
     // Conditions //
     pub is_alive: bool,
+    // Government //
+    pub government: String,
+    pub empathy: u8,  // Changed from humanity to empathy
+    pub greedy: bool,
 }
 
-// Function to create a new Citizen with higher than normal engineering values //
-pub fn create_soviet_citizen(names: &[&str]) -> Citizen {
+// Function to create a new Citizen with government-specific values //
+// To be used as the base for all creation functions once complete //
+pub fn create_citizen(names: &[&str], government: &str) -> Citizen {
     let mut rng = rand::thread_rng();
     
+    let (min_emp, max_emp) = if government == "corporate" { // If corporate start with a lower average empathy //
+        (0, 8)
+    } else {
+        (0, 10) // Normal range //
+    };
+
+    let greed_chance = if government == "corporate" {  // 50% chance for corporate colonists to be greedy //
+        0.5
+    } else {
+        0.05 // 5% chance otherwise //
+    };
+
+    let greedy = rng.gen_bool(greed_chance);
+
     Citizen {
         name: names.choose(&mut rng).unwrap_or(&"Unknown").to_string(),
-        age: rng.gen_range(18..=124),
+        age: rng.gen_range(18..=80),
         mood: rng.gen_range(0..=10),
         unarmed: rng.gen_range(0..=10),
         blades: rng.gen_range(0..=10),
         handguns: rng.gen_range(0..=10),
         rifles: rng.gen_range(0..=10),
         turrets: rng.gen_range(0..=10),
-        electrical: rng.gen_range(2..=12),
-        structural: rng.gen_range(2..=12),
-        propulsion: rng.gen_range(2..=12),
-        hydro: rng.gen_range(2..=12),
+        electrical: rng.gen_range(0..=14),
+        structural: rng.gen_range(0..=14),
+        propulsion: rng.gen_range(0..=14),
+        hydro: rng.gen_range(0..=14),
         biology: rng.gen_range(0..=10),
         math: rng.gen_range(0..=10),
         chemistry: rng.gen_range(0..=10),
@@ -62,6 +82,9 @@ pub fn create_soviet_citizen(names: &[&str]) -> Citizen {
         poetry: rng.gen_range(0..=10),
         history: rng.gen_range(0..=10),
         philosophy: rng.gen_range(0..=10),
+        empathy: rng.gen_range(min_emp..=max_emp),
+        greedy,
         is_alive: true,
+        government: government.to_string(),
     }
 }
