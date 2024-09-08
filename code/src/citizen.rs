@@ -88,3 +88,31 @@ pub fn create_citizen(names: &[&str], government: &str) -> Citizen {
         government: government.to_string(),
     }
 }
+
+pub fn display_citizen(citizen: &Citizen) {
+    // Display the citizen's attributes //
+    println!("Name: {}", citizen.name);
+    println!("Age: {}", citizen.age);
+    println!("Mood: {}", citizen.mood);
+    println!("Unarmed: {}", citizen.unarmed);
+    println!("Blades: {}", citizen.blades);
+    println!("Handguns: {}", citizen.handguns);
+    println!("Rifles: {}", citizen.rifles);
+    println!("Turrets: {}", citizen.turrets);
+    println!("Electrical: {}", citizen.electrical);
+    println!("Structural: {}", citizen.structural);
+    println!("Propulsion: {}", citizen.propulsion);
+    println!("Hydro: {}", citizen.hydro);
+    println!("Biology: {}", citizen.biology);
+    println!("Math: {}", citizen.math);
+    println!("Chemistry: {}", citizen.chemistry);
+    println!("Astronomy: {}", citizen.astronomy);
+    println!("Physics: {}", citizen.physics);
+    println!("Literature: {}", citizen.literature);
+    println!("Poetry: {}", citizen.poetry);
+    println!("History: {}", citizen.history);
+    println!("Philosophy: {}", citizen.philosophy);
+    println!("Empathy: {}", citizen.empathy);
+    println!("Greedy: {}", citizen.greedy);
+    println!("Is Alive: {}", citizen.is_alive);
+}
