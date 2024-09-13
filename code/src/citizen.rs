@@ -6,7 +6,7 @@ use rand::seq::SliceRandom; // For selecting random elements from a list //
 // Define the Citizen struct with public fields //
 // Will have variations for each government type //
 
-pub struct Citizen {
+pub struct Citizen { // TODO Add variables that would hold the appearance of this character //
     pub name: String,
     pub age: u32,
     // Mood to be expanded into multiple values //
