@@ -1,5 +1,5 @@
 // Main file for the entire game //
-mod citizen;
+mod citizens;
 
 fn main() {
     // List of names to choose from //

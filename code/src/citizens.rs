@@ -1,4 +1,4 @@
-// This file will hold the functions used for all citizens in the game //
+// This file holds the functions used for all citizens in the game //
 
 use rand::Rng; // For generating random numbers //
 use rand::seq::SliceRandom; // For selecting random elements from a list //
@@ -7,10 +7,11 @@ use std::mem; // For calculating memory size //
 pub struct Citizen { 
     pub name: String,
     pub age: u32,
+    // TODO Add ethnicity string //
     // Mood and personality values //
     pub mood: u8,
-    pub empathy: u8,  
-    pub greedy: bool,
+    pub empathy: u8, // More likely to share and be affected by others moods // 
+    pub greedy: bool, // Greedy characters are more likely to steal or cheat //
     // Weapon values //
     pub unarmed: u8,
     pub blades: u8,
