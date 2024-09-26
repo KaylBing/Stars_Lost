@@ -1,15 +1,17 @@
 // This file holds the functions used for all citizens in the game //
+// The goal is to keep each citizen under one megabyte of ram in size //
 
 use rand::Rng; // For generating random numbers //
 use rand::seq::SliceRandom; // For selecting random elements from a list //
 use std::mem; // For calculating memory size //
+use std::io::{self, Write}; // For speaking with citizens //
 
 pub struct Citizen { 
     pub name: String,
-    pub age: u32,
+    pub age: u16,
     // TODO Add ethnicity string //
     // Mood and personality values //
-    pub mood: u8,
+    pub mood: String, // Will be linked to other factors eventually //
     pub empathy: u8, // More likely to share and be affected by others moods // 
     pub greedy: bool, // Greedy characters are more likely to steal or cheat //
     // Weapon values //
@@ -59,7 +61,7 @@ pub fn create_citizen(names: &[&str], government: &str) -> Citizen {
     Citizen { 
         name: names.choose(&mut rng).unwrap_or(&"Unknown").to_string(), 
         age: rng.gen_range(18..=80),
-        mood: rng.gen_range(0..=10),
+        mood: "curious".to_string(),
         empathy: rng.gen_range(min_emp..=max_emp),
         greedy,
         unarmed: rng.gen_range(0..=10),
@@ -114,4 +116,27 @@ pub fn display_citizen(citizen: &Citizen) {
 
     let size = mem::size_of_val(citizen); 
     println!("Memory usage of this citizen: {} bytes", size); 
+}
+
+// Function that allows the player to speak 1 on 1 with a citizen //
+pub fn speak_with_citizen(citizen: &Citizen) {
+    loop {
+        // Prompt user for input
+        print!("You: ");
+        io::stdout().flush().unwrap();  // Ensure the prompt is shown immediately
+
+        let mut user_input = String::new();
+        io::stdin().read_line(&mut user_input).expect("Failed to read line");
+
+        let user_input = user_input.trim(); // Remove any extra whitespace/newlines
+
+        // Exit the loop if user types "exit"
+        if user_input.eq_ignore_ascii_case("exit") {
+            println!("Goodbye!");
+            break;
+        }
+
+        // For now, just echo back a blank response from the citizen
+        println!("Citizen {} says: ...", citizen.name);
+    }
 }
