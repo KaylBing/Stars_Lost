@@ -126,19 +126,19 @@ fn tokenize(input: &str) -> Vec<&str> {
     input.split_whitespace().collect()
 }
 
-// Function for the citizen to speak, with learning capability
+// Function for the citizen to speak, with learning capability //
 pub fn speak_with_citizen(citizen: &mut Citizen) {
     loop {
         // Prompt user for input
         print!("You: ");
-        io::stdout().flush().unwrap();  // Ensure the prompt is shown immediately
+        io::stdout().flush().unwrap();  // Ensure the prompt is shown immediately //
 
         let mut user_input = String::new();
         io::stdin().read_line(&mut user_input).expect("Failed to read line");
 
-        let user_input = user_input.trim().to_string(); // Remove any extra whitespace/newlines
+        let user_input = user_input.trim().to_string(); // Remove any extra whitespace/newlines //
 
-        // Exit the loop if user types "exit"
+        // Exit the loop if user types "exit" //
         if user_input.eq_ignore_ascii_case("exit") {
             println!("Citizen {} says: Goodbye!", citizen.name);
             break;
@@ -148,13 +148,13 @@ pub fn speak_with_citizen(citizen: &mut Citizen) {
         if let Some(response) = citizen.knowledge.get(&user_input) {
             println!("Citizen {} says: {}", citizen.name, response);
         } else {
-            // If the question is unknown, ask the user to teach the citizen
+            // If the question is unknown, ask the user to teach the citizen (temp for testing) //
             println!("Citizen {} doesn't know how to respond to that. What should the answer be?", citizen.name);
             let mut new_response = String::new();
             io::stdin().read_line(&mut new_response).expect("Failed to read line");
             let new_response = new_response.trim().to_string();
 
-            // Save the new question/answer pair to the citizen's knowledge
+            // Save the new question/answer pair to the citizen's knowledge //
             citizen.knowledge.insert(user_input, new_response);
             println!("Citizen {} has learned a new response!", citizen.name);
         }
