@@ -7,7 +7,7 @@ use citizens::create_citizen; // Ensure you're importing the create_citizen func
 
 fn main() {
     // List of names to choose from //
-    let names = ["Yashkeno", "Mikhail", "Yaroslav", "Sophia", "Vladmir"];
+    let names = ["Yashchenkno", "Mikhail", "Yaroslav", "Sophia", "Vladmir"];
 
     // Create a mutable citizen with the chosen government type //
     let mut new_citizen = create_citizen(&names, "corporate");

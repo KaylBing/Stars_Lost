@@ -91,19 +91,61 @@ pub fn create_citizen(names: &[&str], government: &str) -> Citizen {
         poetry + history + philosophy,
     ];
 
-    // Calculate the maximum sum
+    // Calculate the maximum sum and determine occupation
     let mut max_sum = group_sums[0];
-    for &sum in &group_sums[1..] {
+    let mut occupation = "Unknown"; // Default occupation
+    for (i, &sum) in group_sums.iter().enumerate() {
         if sum > max_sum {
-            max_sum = sum; // TOOD, make sum = occupation //
+            max_sum = sum;
+            occupation = match i {
+                0 => "Combat Specialist",
+                1 => "Engineer",
+                2 => "Mechanic",
+                3 => "Scientist",
+                4 => "Astronomer",
+                5 => "Historian",
+                _ => "Unknown",
+            };
         }
+    }
+
+    // Return a Citizen object
+    Citizen {
+        name: names.choose(&mut rng).unwrap_or(&"Unknown").to_string(),
+        age: rng.gen_range(18..=60), // Random age
+        occupation: occupation.to_string(),
+        mood: "Neutral".to_string(), // Default mood
+        empathy: rng.gen_range(min_emp..=max_emp),
+        greedy,
+        knowledge: HashMap::new(),
+        unarmed,
+        blades,
+        handguns,
+        rifles,
+        turrets,
+        electrical,
+        structural,
+        propulsion,
+        hydro,
+        biology,
+        math,
+        chemistry,
+        astronomy,
+        physics,
+        literature,
+        poetry,
+        history,
+        philosophy,
+        is_alive: true,
+        government: government.to_string(),
     }
 }
 
 pub fn display_citizen(citizen: &Citizen) {
     println!("Name: {}", citizen.name); 
     println!("Age: {}", citizen.age); 
-    println!("Mood: {}", citizen.mood); 
+    println!("Mood: {}", citizen.mood);
+    println!("Occupation: {}", citizen.occupation);
     println!("Empathy: {}", citizen.empathy);
     println!("Greedy: {}", citizen.greedy); 
     println!("Unarmed: {}", citizen.unarmed); 
