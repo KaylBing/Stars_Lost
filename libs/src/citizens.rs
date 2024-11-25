@@ -10,6 +10,7 @@ use std::collections::HashMap; // For storing learned data //
 pub struct Citizen { 
     pub name: String,
     pub age: u16,
+    pub occupation: String, // Based on the sum of each skill family // 
     // TODO Add ethnicity string //
     // Mood and personality values //
     pub mood: String, // Will be linked to other factors eventually //
@@ -60,33 +61,42 @@ pub fn create_citizen(names: &[&str], government: &str) -> Citizen {
 
     let greedy = rng.gen_bool(greed_chance); 
 
-    Citizen { 
-        name: names.choose(&mut rng).unwrap_or(&"Unknown").to_string(), 
-        age: rng.gen_range(18..=80),
-        mood: "curious".to_string(),
-        empathy: rng.gen_range(min_emp..=max_emp),
-        greedy,
-        knowledge: HashMap::new(),
-        unarmed: rng.gen_range(0..=10),
-        blades: rng.gen_range(0..=10),
-        handguns: rng.gen_range(0..=10),
-        rifles: rng.gen_range(0..=10),
-        turrets: rng.gen_range(0..=10),
-        electrical: rng.gen_range(0..=10),
-        structural: rng.gen_range(0..=10),
-        propulsion: rng.gen_range(0..=10),
-        hydro: rng.gen_range(0..=10),
-        biology: rng.gen_range(0..=10),
-        math: rng.gen_range(0..=10),
-        chemistry: rng.gen_range(0..=10),
-        astronomy: rng.gen_range(0..=10),
-        physics: rng.gen_range(0..=10),
-        literature: rng.gen_range(0..=10),
-        poetry: rng.gen_range(0..=10),
-        history: rng.gen_range(0..=10),
-        philosophy: rng.gen_range(0..=10),
-        is_alive: true,
-        government: government.to_string(),
+    // Generate the values for the citizen attributes
+    let unarmed = rng.gen_range(0..=10);
+    let blades = rng.gen_range(0..=10);
+    let handguns = rng.gen_range(0..=10);
+    let rifles = rng.gen_range(0..=10);
+    let turrets = rng.gen_range(0..=10);
+    let electrical = rng.gen_range(0..=10);
+    let structural = rng.gen_range(0..=10);
+    let propulsion = rng.gen_range(0..=10);
+    let hydro = rng.gen_range(0..=10);
+    let biology = rng.gen_range(0..=10);
+    let math = rng.gen_range(0..=10);
+    let chemistry = rng.gen_range(0..=10);
+    let astronomy = rng.gen_range(0..=10);
+    let physics = rng.gen_range(0..=10);
+    let literature = rng.gen_range(0..=10);
+    let poetry = rng.gen_range(0..=10);
+    let history = rng.gen_range(0..=10);
+    let philosophy = rng.gen_range(0..=10);
+
+    // Group the values and find the maximum sum
+    let group_sums = [
+        unarmed + blades + handguns,
+        rifles + turrets + electrical,
+        structural + propulsion + hydro,
+        biology + math + chemistry,
+        astronomy + physics + literature,
+        poetry + history + philosophy,
+    ];
+
+    // Calculate the maximum sum
+    let mut max_sum = group_sums[0];
+    for &sum in &group_sums[1..] {
+        if sum > max_sum {
+            max_sum = sum; // TOOD, make sum = occupation //
+        }
     }
 }
 
