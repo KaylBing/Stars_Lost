@@ -1,20 +1,20 @@
 // Main file for the entire game //
 // Defines relationships between different functions etc //
-mod citizens;
 
-use rand::seq::SliceRandom; // For selecting random elements from a list //
-use citizens::create_citizen; // Ensure you're importing the create_citizen function
+use ggez::{event, Context, ContextBuilder, GameResult};
+use std::path::PathBuf;
 
-fn main() {
-    // List of names to choose from //
-    let names = ["Yashchenkno", "Mikhail", "Yaroslav", "Sophia", "Vladmir"];
+mod display;
 
-    // Create a mutable citizen with the chosen government type //
-    let mut new_citizen = create_citizen(&names, "corporate");
+fn main() -> GameResult {
+    let (mut ctx, mut event_loop) = ContextBuilder::new("tile_system_game", "Author")
+        .window_mode(ggez::conf::WindowMode::default().dimensions(
+            display::WINDOW_WIDTH,
+            display::WINDOW_HEIGHT,
+        ))
+        .add_resource_path(PathBuf::from("./resources"))
+        .build()?;
 
-    // Display the created citizen //
-    citizens::display_citizen(&new_citizen);
-
-    // Start a conversation with the citizen
-    citizens::speak_with_citizen(&mut new_citizen); // Pass mutable reference
+    let state = display::GameState::new(&mut ctx)?;
+    event::run(ctx, event_loop, state)
 }

@@ -9,3 +9,5 @@ edition = "2021"
 rand = "0.8"
 imgref = "1.6"
 rgb = "0.8"
+ggez = "0.9"
+mint = "0.5" # Optional for vector math
