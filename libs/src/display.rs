@@ -5,20 +5,24 @@
 use ggez::{event::EventHandler, graphics, Context, GameResult};
 use ggez::graphics::{Canvas, Color, DrawParam, Image, Rect};
 
+// Display window variables //
 pub const WINDOW_WIDTH: f32 = 800.0;
 pub const WINDOW_HEIGHT: f32 = 600.0;
 
+// Tile(background) struct //
 pub struct Tile {
     sprite_index: usize,
     is_walkable: bool,
 }
 
+// Struct for characters and monsters //
 pub struct Entity {
     sprite_index: usize,
     x: f32,
     y: f32,
 }
 
+// Imports models and implements them //
 pub struct GameState {
     sprite_sheet: Image,
 }
