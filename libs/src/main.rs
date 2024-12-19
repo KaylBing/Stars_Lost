@@ -5,6 +5,9 @@ use ggez::{event, Context, ContextBuilder, GameResult};
 use std::path::PathBuf;
 
 mod display;
+#[path = "citizens.rs"]
+mod citizen;
+
 
 fn main() -> GameResult {
     let (mut ctx, mut event_loop) = ContextBuilder::new("tile_system_game", "Author")
