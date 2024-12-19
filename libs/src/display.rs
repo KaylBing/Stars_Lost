@@ -3,34 +3,31 @@
 // pixels on the screen //
 
 use ggez::{event::EventHandler, graphics, Context, GameResult};
-use ggez::graphics::{Canvas, Color, DrawParam, Image, Rect};
+use ggez::graphics::{Canvas, Color, DrawParam, Text};
 
 // Display window variables //
 pub const WINDOW_WIDTH: f32 = 800.0;
 pub const WINDOW_HEIGHT: f32 = 600.0;
 
-// Tile(background) struct //
+// Tile (background) struct //
 pub struct Tile {
-    sprite_index: usize,
+    ascii_char: char,
     is_walkable: bool,
 }
 
 // Struct for characters and monsters //
 pub struct Entity {
-    sprite_index: usize,
+    ascii_char: char,
     x: f32,
     y: f32,
 }
 
 // Imports models and implements them //
-pub struct GameState {
-    sprite_sheet: Image,
-}
+pub struct GameState;
 
 impl GameState {
-    pub fn new(ctx: &mut Context) -> GameResult<GameState> {
-        let sprite_sheet = Image::from_path(ctx, "/sprite_sheet.png")?;
-        Ok(GameState { sprite_sheet })
+    pub fn new(_ctx: &mut Context) -> GameResult<GameState> {
+        Ok(GameState)
     }
 
     fn draw_tile(
@@ -40,22 +37,10 @@ impl GameState {
         x: usize,
         y: usize,
     ) -> GameResult {
-        let sprite_width = self.sprite_sheet.width() as f32 / 8.0;
-        let sprite_height = self.sprite_sheet.height() as f32 / 8.0;
+        let position = [x as f32 * 16.0, y as f32 * 16.0]; // Adjust to fit text size
+        let text = Text::new(tile.ascii_char.to_string());
 
-        let sprite_rect = Rect::new(
-            (tile.sprite_index as f32 % 8.0) * sprite_width,
-            (tile.sprite_index as f32 / 8.0).floor() * sprite_height,
-            sprite_width,
-            sprite_height,
-        );
-
-        canvas.draw(
-            &self.sprite_sheet,
-            DrawParam::default()
-                .src(sprite_rect)
-                .dest([x as f32 * sprite_width, y as f32 * sprite_height]),
-        );
+        canvas.draw(&text, DrawParam::default().dest(position));
         Ok(())
     }
 
@@ -64,22 +49,10 @@ impl GameState {
         canvas: &mut Canvas,
         entity: &Entity,
     ) -> GameResult {
-        let sprite_width = self.sprite_sheet.width() as f32 / 8.0;
-        let sprite_height = self.sprite_sheet.height() as f32 / 8.0;
+        let position = [entity.x, entity.y];
+        let text = Text::new(entity.ascii_char.to_string());
 
-        let sprite_rect = Rect::new(
-            (entity.sprite_index as f32 % 8.0) * sprite_width,
-            (entity.sprite_index as f32 / 8.0).floor() * sprite_height,
-            sprite_width,
-            sprite_height,
-        );
-
-        canvas.draw(
-            &self.sprite_sheet,
-            DrawParam::default()
-                .src(sprite_rect)
-                .dest([entity.x, entity.y]),
-        );
+        canvas.draw(&text, DrawParam::default().dest(position));
         Ok(())
     }
 }
@@ -92,10 +65,10 @@ impl EventHandler for GameState {
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult {
         let mut canvas = Canvas::from_frame(ctx, Color::BLACK);
-        
+
         // Example: Draw a tile and an entity
-        let tile = Tile { sprite_index: 0, is_walkable: true };
-        let entity = Entity { sprite_index: 1, x: 100.0, y: 100.0 };
+        let tile = Tile { ascii_char: '.', is_walkable: true };
+        let entity = Entity { ascii_char: '@', x: 100.0, y: 100.0 };
 
         self.draw_tile(&mut canvas, &tile, 0, 0)?;
         self.draw_entity(&mut canvas, &entity)?;
