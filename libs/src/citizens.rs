@@ -42,6 +42,10 @@ pub struct Citizen {
     // Misc values //
     pub is_alive: bool,
     pub government: String,
+    pub x: f32, // Position on the X-axis
+    pub y: f32, // Position on the Y-axis
+    pub dx: f32, // Movement delta on the X-axis
+    pub dy: f32, // Movement delta on the Y-axis
 }
 
 pub fn create_citizen(names: &[&str], government: &str) -> Citizen {
@@ -138,6 +142,27 @@ pub fn create_citizen(names: &[&str], government: &str) -> Citizen {
         philosophy,
         is_alive: true,
         government: government.to_string(),
+        x: rng.gen_range(0.0..800.0), // Initial random position
+        y: rng.gen_range(0.0..600.0), // Initial random position
+        dx: rng.gen_range(-1.0..=1.0), // Random movement delta
+        dy: rng.gen_range(-1.0..=1.0), // Random movement delta
+    }
+}
+
+impl Citizen {
+    pub fn move_citizen(&mut self, bounds_x: f32, bounds_y: f32) {
+        self.x += self.dx;
+        self.y += self.dy;
+
+        // Bounce off the edges of the map
+        if self.x < 0.0 || self.x > bounds_x {
+            self.dx = -self.dx;
+            self.x = self.x.clamp(0.0, bounds_x);
+        }
+        if self.y < 0.0 || self.y > bounds_y {
+            self.dy = -self.dy;
+            self.y = self.y.clamp(0.0, bounds_y);
+        }
     }
 }
 

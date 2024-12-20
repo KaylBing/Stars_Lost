@@ -155,30 +155,38 @@ impl EventHandler for GameState {
     fn update(&mut self, _ctx: &mut Context) -> GameResult {
         // Increment frame counter
         self.frame_counter += 1;
-
+    
         // Update game state here (refresh system memory usage)
         self.system.refresh_all();
-
+    
+        // Update entity positions
+        for entity in &mut self.entities {
+            entity.citizen.move_citizen(WINDOW_WIDTH, WINDOW_HEIGHT);
+            entity.x = entity.citizen.x;
+            entity.y = entity.citizen.y;
+        }
+    
         Ok(())
     }
 
     fn draw(&mut self, ctx: &mut Context) -> GameResult {
         let mut canvas = Canvas::from_frame(ctx, Color::BLACK);
-
+    
         // Draw all tiles (example positions)
         for (i, tile) in self.tiles.iter().enumerate() {
             self.draw_tile(&mut canvas, tile, i, 0)?; // Example row of tiles
         }
-
+    
         // Draw all entities
         for entity in &self.entities {
             self.draw_entity(&mut canvas, entity)?;
         }
-
+    
         // Draw stats (frame counter, FPS, memory usage)
         self.draw_stats(&mut canvas, ctx)?;
-
+    
         canvas.finish(ctx)?;
         Ok(())
     }
+    
 }
