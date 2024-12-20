@@ -104,7 +104,7 @@ pub fn create_citizen(names: &[&str], government: &str) -> Citizen {
                 3 => "Scientist",
                 4 => "Astronomer",
                 5 => "Historian",
-                _ => "Unknown",
+                _ => "Citizen",
             };
         }
     }
