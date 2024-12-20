@@ -8,8 +8,8 @@ use crate::citizen::{create_citizen, Citizen};
 use sysinfo::{System, SystemExt}; // Added sysinfo for system stats
 
 // Display window variables //
-pub const WINDOW_WIDTH: f32 = 1000.0;
-pub const WINDOW_HEIGHT: f32 = 800.0;
+pub const WINDOW_WIDTH: f32 = 600.0;
+pub const WINDOW_HEIGHT: f32 = 400.0;
 
 // Tile (background and walls) struct //
 pub struct Tile {
